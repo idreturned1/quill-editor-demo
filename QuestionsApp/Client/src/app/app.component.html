@@ -1,0 +1,36 @@
+<div class="container" style="max-width: 900px; margin-top: 50px">
+  <div style="margin: 10px 0px;">
+    <strong>Add New Question</strong>
+  </div>
+  <quill-editor style="width: 50%;" [styles]="{height: '100px'}" (onEditorCreated)="newQuestion($event)"
+    (onContentChanged)="contentChanged($event)"></quill-editor>
+  <button type="button" class="btn btn btn-secondary action-button" (click)="cancelQuestion()">Cancel</button>
+  <button type="button" class="btn btn-primary action-button" (click)="saveQuestion()">Save</button>
+  <div class="question-container">
+    <div *ngFor="let question of questions">
+      <div style="margin: 10px; border-bottom: 1px solid darkgray"
+        [ngStyle]="{height: selectedIndex !== question.id ? '100px' : '250px'}">
+        <quill-view-html [content]="question.html" theme="snow"
+          [ngStyle]="{display: selectedIndex !== question.id ? 'block' : 'none'}"></quill-view-html>
+        <quill-editor [styles]="{height: '100px'}"
+          [ngStyle]="{display: selectedIndex === question.id ? 'block' : 'none'}"
+          (onEditorCreated)="editorCreated($event)" (onContentChanged)="contentChanged($event)" format="html"
+          [(ngModel)]="question.html"></quill-editor>
+        <button type="button" class="btn btn btn-secondary action-button" (click)="cancelUpdate()"
+          [ngStyle]="{display: selectedIndex === question.id ? 'block' : 'none'}">
+          <span class="material-icons">close</span>
+        </button>
+        <button type="button" class="btn btn btn-success action-button" (click)="updateQuestion(question)"
+          [ngStyle]="{display: selectedIndex === question.id ? 'block' : 'none'}">
+          <span class="material-icons">done</span>
+        </button>
+        <button type="button" class="btn btn-danger action-button" (click)="deleteQuestion(question)">
+          <span class="material-icons">delete</span>
+        </button>
+        <button type="button" class="btn btn-primary action-button" (click)="editQuestion(question)">
+          <span class="material-icons">mode</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
